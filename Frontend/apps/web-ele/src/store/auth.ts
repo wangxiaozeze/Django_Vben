@@ -1,4 +1,5 @@
 import type { Recordable, UserInfo } from '@vben/types';
+import type { AuthApi } from '#/api/core/auth';
 
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
@@ -7,10 +8,10 @@ import { LOGIN_PATH } from '@vben/constants';
 import { preferences } from '@vben/preferences';
 import { resetAllStores, useAccessStore, useUserStore } from '@vben/stores';
 
-import { ElNotification } from 'element-plus';
+import { ElNotification, ElMessage } from 'element-plus';
 import { defineStore } from 'pinia';
 
-import { getAccessCodesApi, getUserInfoApi, loginApi, logoutApi } from '#/api';
+import { getAccessCodesApi, getUserInfoApi, loginApi, logoutApi, registerApi } from '#/api';
 import { $t } from '#/locales';
 
 export const useAuthStore = defineStore('auth', () => {
@@ -19,6 +20,7 @@ export const useAuthStore = defineStore('auth', () => {
   const router = useRouter();
 
   const loginLoading = ref(false);
+  const registerLoading = ref(false);
 
   /**
    * 异步处理登录操作
@@ -78,6 +80,47 @@ export const useAuthStore = defineStore('auth', () => {
     };
   }
 
+  /**
+   * 异步处理注册操作
+   * Asynchronously handle the registration process
+   * @param params 注册表单数据
+   */
+  async function authRegister(
+    params: Recordable<any>,
+    onSuccess?: () => Promise<void> | void,
+  ) {
+    try {
+      registerLoading.value = true;
+      // 格式化注册参数
+      const registerData: AuthApi.RegisterParams = {
+        username: params.username,
+        password: params.password,
+        confirmPassword: params.confirmPassword,
+        agreePolicy: params.agreePolicy
+      };
+  
+      // 发送注册请求
+      const result = await registerApi(registerData);
+      
+      ElMessage.success($t('authentication.registerSuccess'));
+      
+      // 注册成功后执行回调或跳转到登录页面并传递用户名
+      if (onSuccess) {
+        await onSuccess?.();
+      } else {
+        await router.push({
+          path: LOGIN_PATH,
+          query: { username: result.username }  // 预填充用户名
+        });
+      }
+    } catch (error: any) {
+      console.error('注册失败:', error);
+      ElMessage.error(error.message || $t('authentication.registerFailed'));
+    } finally {
+      registerLoading.value = false;
+    }
+  }
+
   async function logout(redirect: boolean = true) {
     try {
       await logoutApi();
@@ -107,13 +150,16 @@ export const useAuthStore = defineStore('auth', () => {
 
   function $reset() {
     loginLoading.value = false;
+    registerLoading.value = false;
   }
 
   return {
     $reset,
     authLogin,
+    authRegister,
     fetchUserInfo,
     loginLoading,
+    registerLoading,
     logout,
   };
 });

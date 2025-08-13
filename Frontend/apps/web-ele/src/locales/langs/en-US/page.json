@@ -10,5 +10,9 @@
     "title": "Dashboard",
     "analytics": "Analytics",
     "workspace": "Workspace"
+  },
+  "profile": {
+    "profileInfo": "Profile Info",
+    "profileSecurity":"Profile Security"
   }
 }

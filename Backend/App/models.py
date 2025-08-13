@@ -9,7 +9,7 @@ class User(AbstractUser):
     avatar = models.ImageField(upload_to='avatars/', null=True, blank=True)
     
     desc = models.TextField(_("Description"), blank=True)
-    homePath = models.CharField(_("Home path"), max_length=255, default="/dashboard")
+    homePath = models.CharField(_("Home path"), max_length=255, default="/profile/info")
 
     groups = models.ManyToManyField(
         'auth.Group',

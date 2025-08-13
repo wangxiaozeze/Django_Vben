@@ -11,7 +11,7 @@
  Target Server Version : 80041 (8.0.41)
  File Encoding         : 65001
 
- Date: 13/08/2025 12:54:44
+ Date: 13/08/2025 18:59:02
 */
 
 SET NAMES utf8mb4;
@@ -33,11 +33,13 @@ CREATE TABLE `app_menu`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `App_menu_parent_id_5fbc9c55_fk_App_menu_id`(`parent_id` ASC) USING BTREE,
   CONSTRAINT `App_menu_parent_id_5fbc9c55_fk_App_menu_id` FOREIGN KEY (`parent_id`) REFERENCES `app_menu` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of app_menu
 -- ----------------------------
+INSERT INTO `app_menu` VALUES (1, 'ProfileInfo', '/profile/info', '/profile/info/index', '', '{\"icon\": \"lucide:user\", \"order\": 9950, \"title\": \"page.profile.profileInfo\"}', 0, NULL);
+INSERT INTO `app_menu` VALUES (2, 'ProfileSecurity', '/profile/security', '/profile/security/index', '', '{\"icon\": \"lucide:shield\", \"order\": 9960, \"title\": \"page.profile.profileSecurity\"}', 0, NULL);
 
 -- ----------------------------
 -- Table structure for app_menu_groups
@@ -52,11 +54,13 @@ CREATE TABLE `app_menu_groups`  (
   INDEX `App_menu_groups_group_id_f66c1874_fk_auth_group_id`(`group_id` ASC) USING BTREE,
   CONSTRAINT `App_menu_groups_group_id_f66c1874_fk_auth_group_id` FOREIGN KEY (`group_id`) REFERENCES `auth_group` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `App_menu_groups_menu_id_9fa9c8fb_fk_App_menu_id` FOREIGN KEY (`menu_id`) REFERENCES `app_menu` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of app_menu_groups
 -- ----------------------------
+INSERT INTO `app_menu_groups` VALUES (1, 1, 1);
+INSERT INTO `app_menu_groups` VALUES (2, 2, 1);
 
 -- ----------------------------
 -- Table structure for app_user
@@ -81,12 +85,13 @@ CREATE TABLE `app_user`  (
   `homePath` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `username`(`username` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of app_user
 -- ----------------------------
-INSERT INTO `app_user` VALUES (1, 'pbkdf2_sha256$1000000$Cehlkk64ASqtzsbTwVgN5L$i1oQzb/xRj3WO+N+q3vw1CfqxA86+sK6TV4Kbjr0OOM=', '2025-08-13 03:59:09.038135', 1, 'admin', '', '', '123456@qq.com', 1, 1, '2025-08-13 03:58:28.371432', '', '', '', '', '/dashboard');
+INSERT INTO `app_user` VALUES (1, 'pbkdf2_sha256$1000000$Cehlkk64ASqtzsbTwVgN5L$i1oQzb/xRj3WO+N+q3vw1CfqxA86+sK6TV4Kbjr0OOM=', '2025-08-13 03:59:00.000000', 1, 'admin', '', '', '123456@qq.com', 1, 1, '2025-08-13 03:58:00.000000', '', '', '', '', '/profile/info');
+INSERT INTO `app_user` VALUES (2, 'pbkdf2_sha256$1000000$PPhegJmgl5YyIq9GrnXVcB$JDsa1e1MsLAYlEPI6Ac87wxTCTrAnApiK7cURehThp4=', NULL, 0, '123456', '', '', '', 0, 1, '2025-08-13 10:39:33.571919', '', '', '', '', '/profile/info');
 
 -- ----------------------------
 -- Table structure for app_user_groups
@@ -101,11 +106,12 @@ CREATE TABLE `app_user_groups`  (
   INDEX `App_user_groups_group_id_fb4ca4e6_fk_auth_group_id`(`group_id` ASC) USING BTREE,
   CONSTRAINT `App_user_groups_group_id_fb4ca4e6_fk_auth_group_id` FOREIGN KEY (`group_id`) REFERENCES `auth_group` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `App_user_groups_user_id_00019dc6_fk_App_user_id` FOREIGN KEY (`user_id`) REFERENCES `app_user` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of app_user_groups
 -- ----------------------------
+INSERT INTO `app_user_groups` VALUES (1, 1, 1);
 
 -- ----------------------------
 -- Table structure for app_user_user_permissions
@@ -120,11 +126,39 @@ CREATE TABLE `app_user_user_permissions`  (
   INDEX `App_user_user_permis_permission_id_16ceac54_fk_auth_perm`(`permission_id` ASC) USING BTREE,
   CONSTRAINT `App_user_user_permis_permission_id_16ceac54_fk_auth_perm` FOREIGN KEY (`permission_id`) REFERENCES `auth_permission` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `App_user_user_permissions_user_id_43adc0ee_fk_App_user_id` FOREIGN KEY (`user_id`) REFERENCES `app_user` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 29 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of app_user_user_permissions
 -- ----------------------------
+INSERT INTO `app_user_user_permissions` VALUES (1, 1, 1);
+INSERT INTO `app_user_user_permissions` VALUES (2, 1, 2);
+INSERT INTO `app_user_user_permissions` VALUES (3, 1, 3);
+INSERT INTO `app_user_user_permissions` VALUES (4, 1, 4);
+INSERT INTO `app_user_user_permissions` VALUES (5, 1, 5);
+INSERT INTO `app_user_user_permissions` VALUES (6, 1, 6);
+INSERT INTO `app_user_user_permissions` VALUES (7, 1, 7);
+INSERT INTO `app_user_user_permissions` VALUES (8, 1, 8);
+INSERT INTO `app_user_user_permissions` VALUES (9, 1, 9);
+INSERT INTO `app_user_user_permissions` VALUES (10, 1, 10);
+INSERT INTO `app_user_user_permissions` VALUES (11, 1, 11);
+INSERT INTO `app_user_user_permissions` VALUES (12, 1, 12);
+INSERT INTO `app_user_user_permissions` VALUES (13, 1, 13);
+INSERT INTO `app_user_user_permissions` VALUES (14, 1, 14);
+INSERT INTO `app_user_user_permissions` VALUES (15, 1, 15);
+INSERT INTO `app_user_user_permissions` VALUES (16, 1, 16);
+INSERT INTO `app_user_user_permissions` VALUES (17, 1, 17);
+INSERT INTO `app_user_user_permissions` VALUES (18, 1, 18);
+INSERT INTO `app_user_user_permissions` VALUES (19, 1, 19);
+INSERT INTO `app_user_user_permissions` VALUES (20, 1, 20);
+INSERT INTO `app_user_user_permissions` VALUES (21, 1, 21);
+INSERT INTO `app_user_user_permissions` VALUES (22, 1, 22);
+INSERT INTO `app_user_user_permissions` VALUES (23, 1, 23);
+INSERT INTO `app_user_user_permissions` VALUES (24, 1, 24);
+INSERT INTO `app_user_user_permissions` VALUES (25, 1, 25);
+INSERT INTO `app_user_user_permissions` VALUES (26, 1, 26);
+INSERT INTO `app_user_user_permissions` VALUES (27, 1, 27);
+INSERT INTO `app_user_user_permissions` VALUES (28, 1, 28);
 
 -- ----------------------------
 -- Table structure for auth_group
@@ -135,11 +169,12 @@ CREATE TABLE `auth_group`  (
   `name` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `name`(`name` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of auth_group
 -- ----------------------------
+INSERT INTO `auth_group` VALUES (1, '管理员');
 
 -- ----------------------------
 -- Table structure for auth_group_permissions
@@ -154,11 +189,19 @@ CREATE TABLE `auth_group_permissions`  (
   INDEX `auth_group_permissio_permission_id_84c5c92e_fk_auth_perm`(`permission_id` ASC) USING BTREE,
   CONSTRAINT `auth_group_permissio_permission_id_84c5c92e_fk_auth_perm` FOREIGN KEY (`permission_id`) REFERENCES `auth_permission` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `auth_group_permissions_group_id_b120cbf9_fk_auth_group_id` FOREIGN KEY (`group_id`) REFERENCES `auth_group` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of auth_group_permissions
 -- ----------------------------
+INSERT INTO `auth_group_permissions` VALUES (1, 1, 21);
+INSERT INTO `auth_group_permissions` VALUES (2, 1, 22);
+INSERT INTO `auth_group_permissions` VALUES (3, 1, 23);
+INSERT INTO `auth_group_permissions` VALUES (4, 1, 24);
+INSERT INTO `auth_group_permissions` VALUES (5, 1, 25);
+INSERT INTO `auth_group_permissions` VALUES (6, 1, 26);
+INSERT INTO `auth_group_permissions` VALUES (7, 1, 27);
+INSERT INTO `auth_group_permissions` VALUES (8, 1, 28);
 
 -- ----------------------------
 -- Table structure for auth_permission
@@ -225,11 +268,19 @@ CREATE TABLE `django_admin_log`  (
   CONSTRAINT `django_admin_log_content_type_id_c4bce8eb_fk_django_co` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `django_admin_log_user_id_c564eba6_fk_App_user_id` FOREIGN KEY (`user_id`) REFERENCES `app_user` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `django_admin_log_chk_1` CHECK (`action_flag` >= 0)
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of django_admin_log
 -- ----------------------------
+INSERT INTO `django_admin_log` VALUES (1, '2025-08-13 09:20:38.003407', '1', '管理员', 1, '[{\"added\": {}}]', 3, 1);
+INSERT INTO `django_admin_log` VALUES (2, '2025-08-13 09:37:48.525198', '1', 'ProfileInfo', 1, '[{\"added\": {}}]', 6, 1);
+INSERT INTO `django_admin_log` VALUES (3, '2025-08-13 09:38:36.211458', '2', 'ProfileSecurity', 1, '[{\"added\": {}}]', 6, 1);
+INSERT INTO `django_admin_log` VALUES (4, '2025-08-13 09:54:06.113665', '1', 'admin', 2, '[{\"changed\": {\"fields\": [\"Groups\", \"User permissions\", \"Last login\"]}}]', 7, 1);
+INSERT INTO `django_admin_log` VALUES (5, '2025-08-13 10:01:27.253243', '1', 'admin', 2, '[{\"changed\": {\"fields\": [\"Home path\"]}}]', 7, 1);
+INSERT INTO `django_admin_log` VALUES (6, '2025-08-13 10:54:05.666263', '1', 'ProfileInfo', 2, '[{\"changed\": {\"fields\": [\"Meta\"]}}]', 6, 1);
+INSERT INTO `django_admin_log` VALUES (7, '2025-08-13 10:55:11.620893', '1', 'ProfileInfo', 2, '[{\"changed\": {\"fields\": [\"Meta\"]}}]', 6, 1);
+INSERT INTO `django_admin_log` VALUES (8, '2025-08-13 10:56:06.087017', '2', 'ProfileSecurity', 2, '[{\"changed\": {\"fields\": [\"Meta\"]}}]', 6, 1);
 
 -- ----------------------------
 -- Table structure for django_content_type
@@ -264,7 +315,7 @@ CREATE TABLE `django_migrations`  (
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `applied` datetime(6) NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 20 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 21 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of django_migrations
@@ -288,6 +339,7 @@ INSERT INTO `django_migrations` VALUES (16, 'admin', '0001_initial', '2025-08-13
 INSERT INTO `django_migrations` VALUES (17, 'admin', '0002_logentry_remove_auto_add', '2025-08-13 03:58:07.537010');
 INSERT INTO `django_migrations` VALUES (18, 'admin', '0003_logentry_add_action_flag_choices', '2025-08-13 03:58:07.557198');
 INSERT INTO `django_migrations` VALUES (19, 'sessions', '0001_initial', '2025-08-13 03:58:07.637157');
+INSERT INTO `django_migrations` VALUES (20, 'App', '0002_alter_user_homepath', '2025-08-13 10:57:34.630759');
 
 -- ----------------------------
 -- Table structure for django_session

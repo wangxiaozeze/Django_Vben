@@ -10,5 +10,9 @@
     "title": "概览",
     "analytics": "分析页",
     "workspace": "工作台"
+  },
+  "profile": {
+    "profileInfo": "个人信息",
+    "profileSecurity":"账号安全"
   }
 }

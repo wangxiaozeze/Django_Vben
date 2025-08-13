@@ -2,7 +2,7 @@ import type { Preferences } from './types';
 
 const defaultPreferences: Preferences = {
   app: {
-    accessMode: 'frontend',
+    accessMode: 'backend',
     authPageLayout: 'panel-right',
     checkUpdatesInterval: 1,
     colorGrayMode: false,

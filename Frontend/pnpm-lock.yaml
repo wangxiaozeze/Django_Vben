@@ -716,6 +716,9 @@ importers:
 
   apps/web-ele:
     dependencies:
+      '@element-plus/icons-vue':
+        specifier: ^2.3.2
+        version: 2.3.2(vue@3.5.17(typescript@5.8.3))
       '@vben/access':
         specifier: workspace:*
         version: link:../../packages/effects/access
@@ -3443,8 +3446,8 @@ packages:
   '@dual-bundle/import-meta-resolve@4.1.0':
     resolution: {integrity: sha512-+nxncfwHM5SgAtrVzgpzJOI1ol0PkumhVo469KCf9lUi21IGcY90G98VuHm9VRrUypmAzawAHO9bs6hqeADaVg==}
 
-  '@element-plus/icons-vue@2.3.1':
-    resolution: {integrity: sha512-XxVUZv48RZAd87ucGS48jPf6pKu0yV5UCg9f4FFwtrYxXOwWuVJo6wOvSLKEoMQKjv8GsX/mhP6UsC1lRwbUWg==}
+  '@element-plus/icons-vue@2.3.2':
+    resolution: {integrity: sha512-OzIuTaIfC8QXEPmJvB4Y4kw34rSXdCJzxcD1kFStBvr8bK6X1zQAYDo0CNMjojnfTqRQCJ0I7prlErcoRiET2A==}
     peerDependencies:
       vue: ^3.5.17
 
@@ -13491,7 +13494,7 @@ snapshots:
 
   '@dual-bundle/import-meta-resolve@4.1.0': {}
 
-  '@element-plus/icons-vue@2.3.1(vue@3.5.17(typescript@5.8.3))':
+  '@element-plus/icons-vue@2.3.2(vue@3.5.17(typescript@5.8.3))':
     dependencies:
       vue: 3.5.17(typescript@5.8.3)
 
@@ -16953,7 +16956,7 @@ snapshots:
   element-plus@2.10.2(vue@3.5.17(typescript@5.8.3)):
     dependencies:
       '@ctrl/tinycolor': 4.1.0
-      '@element-plus/icons-vue': 2.3.1(vue@3.5.17(typescript@5.8.3))
+      '@element-plus/icons-vue': 2.3.2(vue@3.5.17(typescript@5.8.3))
       '@floating-ui/dom': 1.6.13
       '@popperjs/core': '@sxzz/popperjs-es@2.11.7'
       '@types/lodash': 4.17.16
