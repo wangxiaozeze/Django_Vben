@@ -74,14 +74,11 @@ cd Django_Vben
 # 进入后端目录
 cd Backend
 
-# 创建虚拟环境
-python -m venv venv
+# 创建conda环境
+conda create -n DjangoEnv python==3.12 -y
 
-# 激活虚拟环境
-# Windows
-venv\Scripts\activate
-# Linux/Mac
-source venv/bin/activate
+# 激活conda环境
+conda activate DjangoEnv
 
 # 安装依赖
 pip install -r requirements.txt
@@ -109,13 +106,12 @@ python manage.py runserver
 cd Frontend
 
 # 安装依赖
-npm install
-# 或使用yarn
-yarn install
+npm -g install pnpm
+pnpm install
 
 # 启动开发服务器
 cd apps/web-antd
-npm run dev
+npm run dev:ele
 ```
 
 ## 🚀 快速开始
@@ -140,7 +136,7 @@ npm run dev
 
 ### 访问系统
 
-- **前端管理界面**: http://localhost:3000
+- **前端管理界面**: http://localhost:5777
 - **后端API文档**: http://localhost:8000/swagger/
 - **Django管理后台**: http://localhost:8000/admin/
 
@@ -188,9 +184,6 @@ npm run build
 # 部署到Nginx或其他Web服务器
 ```
 
-### Docker部署
-
-项目提供了Docker配置，位于 `Frontend/scripts/deploy/` 目录下。
 
 ## 🤝 贡献指南
 
@@ -212,7 +205,6 @@ npm run build
 
 - [Vben Admin](https://github.com/vbenjs/vue-vben-admin) - 优秀的管理后台模板
 - [Django](https://www.djangoproject.com/) - 强大的Python Web框架
-- [Ant Design Vue](https://antdv.com/) - 企业级UI组件库
 
 ## 📞 联系方式
 
