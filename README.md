@@ -54,8 +54,8 @@ Django_VbenAdmin/
 
 ## 📋 环境要求
 
-- Python 3.8+
-- Node.js 16+
+- Python 5.0+
+- Node.js 20+
 - MySQL 8.0+
 - Git
 
@@ -111,7 +111,7 @@ pnpm install
 
 # 启动开发服务器
 cd apps/web-antd
-npm run dev:ele
+pnpm dev
 ```
 
 ## 🚀 快速开始
@@ -129,7 +129,7 @@ python manage.py runserver
 
 ```bash
 cd Frontend/apps/web-antd
-npm run dev
+pnpm dev
 ```
 
 前端服务将在 http://localhost:3000 启动
@@ -179,7 +179,7 @@ gunicorn application.wsgi:application --bind 0.0.0.0:8000
 2. **前端部署**
 ```bash
 # 构建生产版本
-npm run build
+pnpm build
 
 # 部署到Nginx或其他Web服务器
 ```
