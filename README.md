@@ -95,8 +95,6 @@ python manage.py migrate
 # 创建超级用户
 python manage.py createsuperuser
 
-# 运行开发服务器
-python manage.py runserver
 ```
 
 ### 3. 前端环境配置
@@ -109,9 +107,6 @@ cd Frontend
 npm -g install pnpm
 pnpm install
 
-# 启动开发服务器
-cd apps/web-antd
-pnpm dev
 ```
 
 ## 🚀 快速开始
@@ -128,11 +123,11 @@ python manage.py runserver
 ### 启动前端服务
 
 ```bash
-cd Frontend/apps/web-antd
-pnpm dev
+cd Frontend
+pnpm dev:ele
 ```
 
-前端服务将在 http://localhost:3000 启动
+前端服务将在 http://localhost:5777 启动
 
 ### 访问系统
 
@@ -210,6 +205,7 @@ pnpm build
 
 - 项目维护者: wangxiaozeze
 - GitHub: [wangxiaozeze/Django_Vben](https://github.com/wangxiaozeze/Django_Vben)
+- CSDN: [地址](https://blog.csdn.net/XiaoMu_001/article/details/150348864)
 
 ---
 
