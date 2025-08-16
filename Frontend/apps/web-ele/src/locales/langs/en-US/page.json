@@ -14,5 +14,11 @@
   "profile": {
     "profileInfo": "Profile Info",
     "profileSecurity":"Profile Security"
+  },
+  "system": {
+    "title": "System Management",
+    "user": {
+      "title": "User Management"
+    }
   }
 }

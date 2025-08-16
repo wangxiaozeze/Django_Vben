@@ -14,5 +14,11 @@
   "profile": {
     "profileInfo": "个人信息",
     "profileSecurity":"账号安全"
+  },
+  "system": {
+    "title": "系统管理",
+    "user": {
+      "title": "用户管理"
+    }
   }
 }

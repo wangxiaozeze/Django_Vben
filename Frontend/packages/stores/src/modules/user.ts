@@ -7,6 +7,10 @@ interface BasicUserInfo {
    */
   avatar: string;
   /**
+   * 用户id
+   */
+  id?: number;
+  /**
    * 用户昵称
    */
   realName: string;
@@ -15,7 +19,7 @@ interface BasicUserInfo {
    */
   roles?: string[];
   /**
-   * 用户id
+   * 用户id (字符串格式，兼容旧版本)
    */
   userId: string;
   /**

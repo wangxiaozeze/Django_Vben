@@ -4,9 +4,16 @@ from django.utils.translation import gettext_lazy as _
 
 # Create your models here.
 class User(AbstractUser):
+    GENDER_CHOICES = [
+        ('M', '男'),
+        ('F', '女'),
+        ('O', '其他'),
+    ]
+    
     realName = models.CharField(_("Real name"), max_length=150, blank=True)
     phone = models.CharField(_("Phone"), max_length=150, blank=True)
     avatar = models.ImageField(upload_to='avatars/', null=True, blank=True)
+    gender = models.CharField(_("Gender"), max_length=1, choices=GENDER_CHOICES, blank=True, null=True)
     
     desc = models.TextField(_("Description"), blank=True)
     homePath = models.CharField(_("Home path"), max_length=255, default="/profile/info")

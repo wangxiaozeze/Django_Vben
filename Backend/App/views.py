@@ -239,3 +239,163 @@ class MenuViewSet(viewsets.ReadOnlyModelViewSet):
             'code': 0,
             'data': serializer.data
         })
+
+class UserManagementViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all().order_by('-date_joined')
+    serializer_class = UserManagementSerializer
+    filterset_class = UserFilter
+    pagination_class = StandardResultsSetPagination
+    permission_classes = [permissions.IsAuthenticated]  # 需要认证
+    
+    def get_serializer_class(self):
+        if self.action == 'create':
+            return UserCreateSerializer
+        elif self.action in ['update', 'partial_update']:
+            return UserUpdateSerializer
+        return UserManagementSerializer
+    
+    def list(self, request, *args, **kwargs):
+        """获取用户列表"""
+        queryset = self.filter_queryset(self.get_queryset())
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            result = self.get_paginated_response(serializer.data)
+            return Response({
+                'code': 0,
+                'data': {
+                    'items': result.data['results'],
+                    'total': result.data['count'],
+                    'page': result.data.get('page', 1),
+                    'pageSize': result.data.get('page_size', 10)
+                }
+            })
+        
+        serializer = self.get_serializer(queryset, many=True)
+        return Response({
+            'code': 0,
+            'data': serializer.data
+        })
+    
+    def create(self, request, *args, **kwargs):
+        """创建用户"""
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.save()
+        
+        return Response({
+            'code': 0,
+            'data': {
+                'message': '用户创建成功',
+                'id': user.id
+            }
+        }, status=status.HTTP_201_CREATED)
+    
+    def retrieve(self, request, *args, **kwargs):
+        """获取单个用户详情"""
+        instance = self.get_object()
+        serializer = self.get_serializer(instance)
+        return Response({
+            'code': 0,
+            'data': serializer.data
+        })
+    
+    def update(self, request, *args, **kwargs):
+        """更新用户信息"""
+        partial = kwargs.pop('partial', False)
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        
+        return Response({
+            'code': 0,
+            'data': {
+                'message': '用户信息更新成功'
+            }
+        })
+    
+    def destroy(self, request, *args, **kwargs):
+        """删除用户"""
+        instance = self.get_object()
+        if instance == request.user:
+            return Response({
+                'code': 400,
+                'message': '不能删除自己的账户'
+            }, status=status.HTTP_400_BAD_REQUEST)
+        
+        instance.delete()
+        return Response({
+            'code': 0,
+            'data': {
+                'message': '用户删除成功'
+            }
+        })
+    
+    @action(detail=True, methods=['post'], url_path='reset-password')
+    def reset_password(self, request, pk=None):
+        """重置用户密码"""
+        user = self.get_object()
+        serializer = ResetPasswordSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        
+        new_password = serializer.validated_data['new_password']
+        user.set_password(new_password)
+        user.save()
+        
+        return Response({
+            'code': 0,
+            'data': {
+                'message': '密码重置成功'
+            }
+        })
+    
+    @action(detail=True, methods=['post'], url_path='toggle-status')
+    def toggle_status(self, request, pk=None):
+        """切换用户状态（激活/禁用）"""
+        user = self.get_object()
+        if user == request.user:
+            return Response({
+                'code': 400,
+                'message': '不能禁用自己的账户'
+            }, status=status.HTTP_400_BAD_REQUEST)
+        
+        user.is_active = not user.is_active
+        user.save()
+        
+        status_text = '激活' if user.is_active else '禁用'
+        return Response({
+            'code': 0,
+            'data': {
+                'message': f'用户已{status_text}',
+                'is_active': user.is_active
+            }
+        })
+
+class GroupViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Group.objects.all()
+    serializer_class = GroupSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    
+    def list(self, request, *args, **kwargs):
+        """获取所有用户组"""
+        queryset = self.get_queryset()
+        serializer = self.get_serializer(queryset, many=True)
+        return Response({
+            'code': 0,
+            'data': serializer.data
+        })
+
+class PermissionViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Permission.objects.all()
+    serializer_class = PermissionSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    
+    def list(self, request, *args, **kwargs):
+        """获取所有权限"""
+        queryset = self.get_queryset()
+        serializer = self.get_serializer(queryset, many=True)
+        return Response({
+            'code': 0,
+            'data': serializer.data
+        })
